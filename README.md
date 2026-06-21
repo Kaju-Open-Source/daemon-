@@ -1,24 +1,24 @@
 # daemon[]
 
-> quietly runs in the background. manages nicknames so you don't have to.
+> it just changes nicknames. that's it. that's the bot.
 
-daemon[] is a lightweight Discord bot for kaju[oss] that automatically prefixes member nicknames based on their assigned role.
+a lightweight Discord bot that automatically prefixes member nicknames based on their assigned role. built for [kaju[oss]](https://github.com/Kaju-Open-Source).
 
 ---
 
 ## prefix map
 
-| role          | prefix   |
-|---------------|----------|
-| `core`        | [core]   |
-| `ai-eng`      | [ai]     |
-| `frontend`    | [fe]     |
-| `backend`     | [be]     |
-| `contributor` | [cb]     |
-| `enthusiast`  | [en]     |
-| `viewer`      | [vw]     |
+| role | prefix |
+|------|--------|
+| `[core]` | [CORE] |
+| `[ai-eng]` | [AI] |
+| `[frontend]` | [FE] |
+| `[backend]` | [BE] |
+| `[contributor]` | [CB] |
+| `[bot]` | [BT] |
+| `[viewer]` | [VW] |
 
-highest role wins. if someone is `core` and `fe`, they get `[core]`.
+highest role wins — if someone has `[core]` and `[fe]`, they get `[CORE]`.
 
 ---
 
@@ -26,65 +26,71 @@ highest role wins. if someone is `core` and `fe`, they get `[core]`.
 
 **1. clone & install**
 ```bash
-git clone <your-repo>
+git clone ttps://github.com/Kaju-Open-Source/daemon-.git
 cd daemon
 npm install
 ```
 
 **2. create your bot**
-- go to https://discord.com/developers/applications
-- create a new application → add a bot
+- go to [discord.com/developers/applications](https://discord.com/developers/applications)
+- create a new application → bot tab → add a bot
+- under **Privileged Gateway Intents** enable **Server Members Intent**
 - copy the token
 
 **3. set up env**
 ```bash
 cp .env.example .env
-# paste your token into .env
+# open .env and paste your token — no quotes, no spaces
 ```
 
-**4. invite the bot to your server**
+**4. invite to your server**
 
-generate an invite URL with these permissions:
-- `Manage Nicknames`
-- `View Channels`
+go to OAuth2 → URL Generator and select:
+- scope: `bot`
+- permission: `Manage Nicknames`
 
-and these scopes:
-- `bot`
-- `applications.commands`
+paste the generated URL in your browser and select your server.
 
-> ⚠️ daemon[] must have a role **higher** than the roles it manages in your server's role list, otherwise Discord won't let it change nicknames.
+> ⚠️ in your server's role list, drag daemon[]'s role **above** all the roles it manages — otherwise Discord blocks nickname changes.
 
-**5. run it**
+**5. run**
 ```bash
 node index.js
 ```
 
+you should see:
+```
+[daemon] online as daemon[]#1234
+[daemon] watching 1 server(s)
+```
+
 ---
 
-## running on oracle cloud (recommended)
+## keeping it alive with pm2
 
 ```bash
-# install node on your VM
-sudo apt update && sudo apt install -y nodejs npm
-
-# clone and set up
-git clone <your-repo>
-cd daemon
-npm install
-cp .env.example .env
-nano .env  # paste your token
-
-# run with pm2 so it stays alive
 npm install -g pm2
 pm2 start index.js --name "daemon"
 pm2 save
 pm2 startup
 ```
 
+works on Linux (Ubuntu/Arch) or any cloud VM. daemon[] will restart automatically on reboot.
+
 ---
 
-## notes
+## known limitations
 
-- the bot **cannot** change the server owner's nickname — Discord limitation
-- roles are matched case-insensitively
+- **server owner** — Discord does not allow any bot to change the server owner's nickname. change yours manually.
+- roles are matched **case-insensitively**
 - if a member has no matching role, any existing prefix is stripped cleanly
+
+---
+
+## contributing
+
+this is an open source project by kaju[oss]. PRs and issues are welcome — check out the open issues if you want to jump in.
+
+---
+
+*part of the kaju[oss] toolchain.*
