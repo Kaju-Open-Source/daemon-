@@ -12,7 +12,7 @@ const client = new Client({
 // The first matching role in this list wins
 const ROLE_PREFIX_MAP = [
   { name: "[core]",        prefix: "[CORE]" },
-  { name: "[ai-eng]",      prefix: "[AI]"   },
+  { name: "[ai-engineer]",      prefix: "[AI]"   },
   { name: "[frontend]",    prefix: "[FE]"   },
   { name: "[backend]",     prefix: "[BE]"   },
   { name: "[contributor]", prefix: "[CB]"   },
